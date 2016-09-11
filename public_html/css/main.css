@@ -1,0 +1,482 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans","Helvetica",Arial,sans-serif;
+}
+a{
+    color: black;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+h1{
+    text-transform: capitalize;
+}
+body{
+    background: url("../assets/bg.png") no-repeat;
+    background-size: cover;
+    height: 100%;
+    overflow-y: hidden;
+}
+input, button{
+    outline: none;
+}
+button{
+    transition: 0.1s transform ease-in-out;
+}
+button:active{
+    transform: scale(.99);
+}
+.makeBlur{
+    opacity: 0.4;
+}
+#page{
+    display: flex;
+}
+header{
+    background-color: #4caf50;
+    position: fixed;
+    width: 100%;
+    z-index: 900;
+    height: 70px;
+    border-bottom: 1px solid darkgreen;
+    display: flex;
+    justify-content: space-between;
+}
+#headerRightIcons{
+    display: flex;
+}
+#headerLeftIcons{
+    display: flex;
+}
+#menu{
+    display: none;
+    cursor: pointer;
+    align-self: center;
+}
+#menu i:hover{
+    color: white;
+}
+#logo{
+    background: url("../assets/todo_logo.png") no-repeat;
+    background-size: contain;
+    width: 300px;
+    height: 55px;
+    margin: auto 40px;
+    vertical-align: middle;
+}
+.userAvatar{
+    background: url("../assets/login_icon.png") no-repeat;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    border-radius: 50%;
+    border: 2px solid black;
+    display: inline-block;
+    background-color: yellow;
+    cursor: pointer;
+}
+#headerAvatarButton{
+    margin: auto 20px auto 0;
+}
+#accountMenu{
+    z-index: 5000;
+    position: absolute;
+    background-color: lightyellow;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    border-radius: 5px;
+    display: none;
+}
+#username{
+    font-weight: bold;
+    margin: 20px 20px 10px;
+}
+#emailId{
+    margin: 0 20px 20px;
+    color: #666;
+}
+#signoutContainer{
+    border-top: 1px solid #ccc;
+    background-color: #f5f5f5;
+    padding: 15px 0;
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+}
+#signout{
+    margin: 0;
+    background-color: #4caf50;
+}
+#headerAddTodoButton{
+    display: inline-block;
+    margin: 0 30px 0 0;
+    cursor: pointer;
+    align-self: center;
+}
+#headerAddTodoButton:hover{
+    color: #3d3d3d;
+}
+#navAvatarButton{
+    display: none;
+    margin: 0 auto 10px auto;
+    flex-grow: 1;
+}
+nav {
+    width: 17rem;
+    height: 100vh;
+    padding-top: 70px;
+    box-sizing: border-box;
+    background-color: lightyellow;
+    z-index: 800;
+    position: fixed;
+    overflow-y: auto;
+    border-right: 1px solid blanchedalmond;
+    transition: margin-left 0.3s;
+    flex-grow: 1;
+}
+#navInner{
+    padding-top: 20px;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+#navLinksContainer{
+    flex-grow: 2;
+}
+.menuDisplayed{
+    margin-left: 0;
+}
+ul{
+    list-style: none;
+}
+.navLinks{
+    margin: 5px 8%;
+    font-size: 20px;
+    font-weight: bolder;
+    height: 50px;
+}
+.navLinks a{
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+.navLinks i {
+    font-size: 25px;
+}
+.menuListIcon{
+    margin-right: 20px;
+}
+.navLinks:hover{
+    background-color: rgba(76, 175, 80, 0.51);
+}
+.clicked{
+    background-color: rgba(76, 175, 80, 0.51);
+    border-left: 7px solid green;
+}
+#content{
+    box-sizing: border-box;
+    padding: 70px 0 0 17rem;
+    float: right;
+    height: 100vh;
+    flex-grow: 2;
+}
+#contentInner{
+    padding: 15px 40px 60px;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+    min-width: 500px;
+}
+.contentAddTodoButton{
+    margin-bottom: 20px;
+}
+#headingDate{
+    margin-left: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+#todoList{
+    margin-top: 20px;
+}
+.todoListItem{
+    padding: 15px 10px;
+    margin: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.56);
+}
+#addTodoWindow{
+    width: 60%;
+    display: none;
+    position: absolute;
+    z-index: 700;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    top: 85px;
+    left: 20%;
+    background-color: #ffffa4;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.windowRow{
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+#schedule{
+    width: 30%;
+    border-radius: 0 5px 5px 0;
+    display: none;
+    padding: 0 8px;
+}
+input[type='text']{
+    margin-top: 10px;
+    font-size: 1em;
+    width: 100%;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
+button{
+    background-color: #3d3d3d;
+    border: none;
+    border-radius: 3px;
+    margin: 20px 0 0 2px;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+}
+button:active{
+    background-color: black;
+}
+.notificationWindow{
+    position: absolute;
+    z-index: 600;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    width: 35%;
+    top: 150px;
+    padding: 20px 0;
+    left: 40%;
+    border-radius: 10px;
+    text-align: center;
+    background-color: rgb(152, 252, 156);
+    display: none;
+}
+.notificationWindow i{
+    font-size: 8rem;
+    color: dodgerblue;
+    margin-bottom: 10px;
+}
+.message{
+    font-size: 2rem;
+    font-weight: bold;
+    color: red;
+}
+.todoListItemLeft{
+    display: flex;
+    margin-right: 10px;
+}
+.checkBox{
+    margin: 0 15px 0 5px;
+    cursor: pointer;
+}
+.taskRightIcons{
+    display: flex;
+    float: right;
+    margin-left: 10px;
+}
+.taskDate{
+    margin-right: 10px;
+}
+.optionsDotIcon{
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+.optionsDotIcon:hover{
+    color: #6e6868;
+}
+.star{
+    margin: 0 10px;
+    cursor: pointer;
+}
+.deleteOneTodo{
+    cursor: pointer;
+}
+#tooltip{
+    background-color: #3d3d3d;
+    color: white;
+    border-radius: 5px;
+    position: absolute;
+    padding: 5px 8px;
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    display: none;
+    text-align: center;
+    animation-duration: 200ms;
+    animation-name: fadeIn;
+}
+.fa-star{
+    color: red;
+}
+.calendarIconText{
+    position: absolute;
+    top: 0;
+    font-size: 13px;
+    line-height: 2.1em;
+}
+.fa-stack{
+    width: initial;
+    height: initial;
+    line-height: initial;
+}
+.optionsMenu{
+    width: 15rem;
+    position: absolute;
+    left: 75%;
+    top: 0;
+    z-index: 600;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    padding: 5px 0;
+    background-color: beige;
+    display: none;
+}
+.optionsMenuItem{
+    font-size: 1rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+}
+.optionsMenuItem:hover{
+    background-color: rgba(76, 175, 80, 0.51);
+}
+.separator{
+    border-bottom: 1px solid grey;
+    height: 0;
+    margin: 5px 0;
+    padding: 0;
+}
+.optionListIcon{
+    margin-right: 10px;
+    color: green;
+}
+.optionDisplayed{
+    display: block;
+}
+#editWindow{
+    width: 100%;
+    margin: 0 10px;
+}
+#editWindow [input='text']{
+    margin-top: 0;
+}
+#cancelEditedTodo{
+    margin-left: 40px;
+}
+#calendarContainer{
+    position: absolute;
+    z-index: 750;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    padding: 20px 10px;
+    background-color: #f4e66c;
+    display: none;
+}
+.fa-circle-o{
+    color: red;
+}
+#printListContainer{
+    flex-grow: 1;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    height: 20px;
+}
+#printList{
+    height: 100%;
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 0 8%;
+}
+#printList a{
+    height: 100%;
+    padding: 0 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #328ad6;
+}
+
+@media print {
+    nav, button, .optionsDotIcon , #headerRightIcons{
+        display: none;
+    }
+    #content{
+        padding: 3cm 0;
+
+    }
+    #noCompletedTodoLeft{
+        display: none;
+        background-color: transparent;
+        padding: 0;
+    }
+    #noCompletedTodoLeft *{
+        display: none;
+    }
+    .todoListItem{
+        border-bottom: 1mm solid black;
+        background-color: transparent;
+    }
+    #headerLeftIcons{
+        float: none;
+        margin: auto;
+    }
+    header{
+        padding-bottom: 1cm;
+    }
+    h1{
+        padding-top: 0.5cm;
+    }
+}
+@media screen and (max-width: 768px){
+    #menu{
+        display: inline-block;
+        margin: 0 3%;
+    }
+    nav{
+        margin-left: -17rem;
+    }
+    #logo{
+        margin: 5px 0;
+    }
+    #headerAvatarButton{
+        display: none;
+    }
+    #navAvatarButton{
+        display: inline-table;
+    }
+    #content{
+        padding-left: 0;
+        width: 100%;
+    }
+    #addTodoWindow{
+        width: 98%;
+        left: 1%;
+    }
+    .notificationWindow{
+        left: 28%;
+    }
+}
