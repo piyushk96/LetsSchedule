@@ -34,7 +34,7 @@ function fillCalendar(month, year) {
     }
 }
 
-$('#calendarContainer').on('click', '#cal_RightButton',function () {
+$('#calendarContainer').on('click tap', '#cal_RightButton',function () {
     if(month == 11)
     {
         year++;
@@ -45,7 +45,7 @@ $('#calendarContainer').on('click', '#cal_RightButton',function () {
     fillCalendar(month, year);
 });
 
-$('#calendarContainer').on('click', '#cal_LeftButton',function () {
+$('#calendarContainer').on('click tap', '#cal_LeftButton',function () {
     if(month == 0)
     {
         year--;

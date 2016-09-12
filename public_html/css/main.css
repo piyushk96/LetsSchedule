@@ -479,4 +479,7 @@ button:active{
     .notificationWindow{
         left: 28%;
     }
+    #headerAddTodoButton {
+        margin: 0 10px 0 0;
+    }
 }

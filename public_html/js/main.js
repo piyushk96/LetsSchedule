@@ -27,7 +27,7 @@ function getClientId() {
 function addTodo(newTodo) {
     $.post('/todos/addtodo', newTodo, function (data, status) {
         console.log('Todo add status: ' + status);
-        $('#closeButton').trigger('click');
+        $('#closeButton').trigger('click tap');
         var top = $('#contentInner').scrollTop()
         $(window).trigger('hashchange');
         $('#contentInner').scrollTop(top);
@@ -195,15 +195,15 @@ $(document).ready(function () {
             $('#accountMenu').hide();
         }
         else if(e.keyCode == 13 && $('#addTodoWindow').css('display') == 'block')
-            $('#addTask').trigger('click');
+            $('#addTask').trigger('click tap');
         else if(e.keyCode == 13 && editWindowOpened == true)
-            $('#saveEditedTodo').trigger('click');
+            $('#saveEditedTodo').trigger('click tap');
     });
 
 
     ////////////////////////////Click Events//////////////////////////////////////
 
-    $('#contentInner').on('click', '.todoListItem', function () {
+    $('#contentInner').on('click tap', '.todoListItem', function () {
         currentTodoId = $(this).attr('id');
     });
 
@@ -215,7 +215,7 @@ $(document).ready(function () {
         showOptionsMenuItems();
     });
 
-    $('#page').on('click', function (el) {      ////options menu open close
+    $('#page').on('click tap', function (el) {      ////options menu open close
         $('#tooltip').hide();
         if(el.target.className == 'optionsDotIcon' || el.target.classList[1] == 'fa-ellipsis-v'){
             topPosition = event.clientY + 30;
@@ -230,7 +230,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.userAvatar').click(function () {
+    $('.userAvatar').on('click tap', function () {
         var topPos = $(this).position().top;
         var leftPos = $(this).position().left;
         $('#accountMenu').show();
@@ -242,39 +242,39 @@ $(document).ready(function () {
         })
     });
 
-    $('#signout').click(function () {
+    $('#signout').on('click tap', function () {
         $('#accountMenu').hide();
         console.log(document.cookie);
         document.cookie = 'todolistClient=; expires= Thu, 01 Jan 1970 00:00:00 GMT; path=/';
         window.location.href = '/login';
     });
 
-    $('.navLinks').click(function () {
+    $('.navLinks').on('click tap', function () {
         $('.navLinks').removeClass('clicked');
         $(this).addClass('clicked');
         $('nav').removeClass('menuDisplayed');
     });
 
-    $('#printList').click(function () {
+    $('#printList').on('click tap', function () {
         window.print();
     });
 
-    $('.optionsMenuItem').click(function () {
+    $('.optionsMenuItem').on('click tap', function () {
         if( $(this).attr('class') != "optionsMenuItem addReminder")
             $('#optionsMenu').removeClass('optionDisplayed');
     });
 
-    $('#menu').click(function () {
+    $('#menu').on('click tap', function () {
         $('nav').toggleClass('menuDisplayed');
     });
 
-    $('#closeButton').click(function () {
+    $('#closeButton').on('click tap', function () {
         $('#addTodoWindow').hide();
         $('#page').removeClass('makeBlur');
         $('#calendarContainer').hide();
     });
 
-    $('#addTask').click(function () {
+    $('#addTask').on('click tap', function () {
         var task = $('#newTodo').val();
         var date = $('#schedule').attr('data-selecteddate');
         var important = false;
@@ -298,13 +298,13 @@ $(document).ready(function () {
         }
     });
 
-    $('#addReminder').click(function () {
+    $('#addReminder').on('click tap', function () {
         $('#schedule').show();
         $('#newTodo').css('border-radius', '5px 0 0 5px');
-        $('#schedule').trigger('click');
+        $('#schedule').trigger('click tap');
     });
 
-    $('#schedule').click(function () {
+    $('#schedule').on('click tap', function () {
         $('#calendarContainer').show();
         var top = $('#schedule').offset().top;
         var left = $('#schedule').offset().left;
@@ -314,11 +314,11 @@ $(document).ready(function () {
         });
     });
 
-    $('#headerAddTodoButton').click(function () {
+    $('#headerAddTodoButton').on('click tap', function () {
         $('#addReminder').show();
     });
 
-    $("#contentInner").on('click', '.checkBox', function () {
+    $("#contentInner").on('click tap', '.checkBox', function () {
         currentTodoId = $(this).parent().parent().attr('id');
         var done;
         if( $(this).attr('data-done') == 'false')
@@ -330,7 +330,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#contentInner').on('click', '.star', function () {
+    $('#contentInner').on('click tap', '.star', function () {
         currentTodoId = $(this).parent().parent().attr('id');
         var imp;
         if( $(this).attr('data-important') == 'false')
@@ -351,11 +351,11 @@ $(document).ready(function () {
         });
     });
 
-    $("#contentInner").on('click', '.contentAddTodoButton', function () {
+    $("#contentInner").on('click tap', '.contentAddTodoButton', function () {
         currentTodoList = $(this).parent().attr('id');
         $('#addReminder').show();
         if(requestPath != 'inbox' && requestPath != 'important'){
-            $('#addReminder').trigger('click');                     //// to display reminder input box
+            $('#addReminder').trigger('click tap');                     //// to display reminder input box
             $('#addReminder').hide();                   //hides add reminder button
 
             var dateTimestamp = parseInt( $('#'+currentTodoList +' h1').children().attr('data-timestamp') );
@@ -367,26 +367,26 @@ $(document).ready(function () {
 
     });
 
-    $("#contentInner").on('click','#deleteAllCompleted', function () {
+    $("#contentInner").on('click tap','#deleteAllCompleted', function () {
         $.get('/todos/deletetodos?id=0&clientId=' + clientId, function (data, status) {
             $('#contentInner').html('<h1>Completed</h1>');
             $('#noCompletedTodoLeft').show();
         });
     });
 
-    $('.markCompleted').click(function () {
+    $('.markCompleted').on('click tap', function () {
         $.get('/todos/modifydonestatus?id=' + currentTodoId + '&done=false&clientId=' + clientId, function (data, status) {
             $('#'+currentTodoId).remove();
         });
     });
 
-    $('.markNotCompleted').click(function () {
+    $('.markNotCompleted').on('click tap', function () {
         $.get('/todos/modifydonestatus?id=' + currentTodoId + '&done=true&clientId=' + clientId, function (data, status) {
             $('#'+currentTodoId).remove();
         });
     });
 
-    $('.markImportant').click(function () {
+    $('.markImportant').on('click tap', function () {
         var thisStar = $('#' + currentTodoId + ' .star');
         $.get('/todos/modifyimportantstatus?id=' + currentTodoId + '&imp=false&clientId=' + clientId, function (data, status) {
             if(thisStar.attr('data-important') == 'true')
@@ -397,7 +397,7 @@ $(document).ready(function () {
         });
     });
 
-    $('.markNotImportant').click(function () {
+    $('.markNotImportant').on('click tap', function () {
         var thisStar = $('#' + currentTodoId + ' .star');
         $.get('/todos/modifyimportantstatus?id=' + currentTodoId + '&imp=true&clientId=' + clientId, function (data, status) {
             if(requestPath == 'important')
@@ -412,25 +412,25 @@ $(document).ready(function () {
         });
     });
 
-    $(".deleteOneTodo").click(function () {
+    $(".deleteOneTodo").on('click tap', function () {
         $.get('/todos/deletetodos?id=' + currentTodoId + '&clientId=' + clientId, function (data, status) {
             $('#'+currentTodoId).remove();
         });
     });
 
-    $('.dueToday').click(function () {
+    $('.dueToday').on('click tap', function () {
         $.get('/todos/updatetododate?id=' + currentTodoId + '&date=today&clientId=' + clientId, function (data, status) {
             showTodos(requestPath)
         });
     });
 
-    $('.dueTomorrow').click(function () {
+    $('.dueTomorrow').on('click tap', function () {
         $.get('/todos/updatetododate?id=' + currentTodoId + '&date=tomorrow&clientId=' + clientId, function (data, status) {
             showTodos(requestPath)
         });
     });
 
-    $('.addReminder').click(function () {
+    $('.addReminder').on('click tap', function () {
         menuAddReminderSelected = true;
         var el = $('#calendarContainer');
         el.show();
@@ -446,7 +446,7 @@ $(document).ready(function () {
         });
     });
 
-    $(".editTodo").click(function () {
+    $(".editTodo").on('click tap', function () {
         if(requestPath == 'completed')
             return;
         if(editWindowOpened) {                //remove previous opened window
@@ -469,7 +469,7 @@ $(document).ready(function () {
         $('#editWindow input').val(oldTodo).focus();
     });
 
-    $('#contentInner').on('click', '#saveEditedTodo', function () {
+    $('#contentInner').on('click tap', '#saveEditedTodo', function () {
         var todo = $('#editWindow input').val();
         if( todo == '' )
         {
@@ -495,13 +495,13 @@ $(document).ready(function () {
         }
     });
 
-    $('#contentInner').on('click', '#cancelEditedTodo', function () {
+    $('#contentInner').on('click tap', '#cancelEditedTodo', function () {
         editWindowOpened = false;
         showTodos(requestPath);
     });
 
     ///////////////////////////Calendar Date Click///////////////////////////////////
-    $('#calendarContainer').on('click', '.cal_date', function () {
+    $('#calendarContainer').on('click tap', '.cal_date', function () {
         date = $(this).html();
         var selectedDate = new Date(year, month, date);
         if(menuAddReminderSelected == true){
