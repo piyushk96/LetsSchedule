@@ -1,7 +1,7 @@
 /**
  * Created by piyush on 24/8/16.
  */
-'use strict';
+'use strict';git 
 const mysql = require('mysql');
 
 let connection = {};
@@ -10,13 +10,13 @@ const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'O
 
 function createConnection() {
     connection = mysql.createConnection({
+        host: 'sql6.freemysqlhosting.net',
+        user: 'sql6138205',
+        database: 'sql6138205',
+        password: 'dTluEG1wIr'
         // host: 'localhost',
         // user: 'todouser',
         // database: 'tododb'
-        host: 'sql6.freemysqlhosting.net',
-        user: 'sql6135220',
-        database: 'sql6135220',
-        password: 'CGsgMxRq1I'
     });
 }
 

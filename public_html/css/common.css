@@ -13,8 +13,7 @@ body{
     max-width: 600px;
     margin: 20px auto -20px auto;
     text-align: center;
-    display: none;
-    /*display: table;*/
+    display: table;
 }
 .message{
     background-color: rgba(214,40,34,0.07);
@@ -22,6 +21,12 @@ body{
     color: #d62822;
     border-radius: 4px;
     padding: 10px 30px;
+}
+#incorrectEmail{
+    display: none;
+}
+#enterPassword{
+    display: none;
 }
 #formWrapper{
     width: 400px;
@@ -91,12 +96,6 @@ button{
 button:active{
     transform: scale(.99);
 }
-#forgotPassword{
-    margin: 10px auto;
-}
-#forgotPassword a{
-    font-size: 18px;
-}
 .separator{
     background-image: url("../assets/separator.png");
     height: 30px;
@@ -117,7 +116,7 @@ button:active{
     height: 55px;
     color: white;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     border-radius: 5px;
 }
 .google{

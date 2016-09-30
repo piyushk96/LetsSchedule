@@ -14,21 +14,18 @@ var clientId = 0;
 
 
 function getClientId() {
-    var cookieVal = document.cookie;
-    if(cookieVal == '')
+    var userId = localStorage.getItem('todolistClient');
+    if(userId == '')
         window.location.href = '/login';
     else
-    {
-        var cookieArr = cookieVal.split('=');
-        return cookieArr[1];
-    }
+        return userId;
 }
 
 function addTodo(newTodo) {
     $.post('/todos/addtodo', newTodo, function (data, status) {
         console.log('Todo add status: ' + status);
-        $('#closeButton').trigger('click tap');
-        var top = $('#contentInner').scrollTop()
+        $('#closeButton').trigger('click');
+        var top = $('#contentInner').scrollTop();
         $(window).trigger('hashchange');
         $('#contentInner').scrollTop(top);
         lastTodoId++;
@@ -180,8 +177,8 @@ $(document).ready(function () {
 
     clientId = getClientId();
     $.get('/todos/emailandusername?clientId=' + clientId, function (data, status) {
-        $('#username').html(data.username);
-        $('#emailId').html(data.email);
+        $('#username').html(data[0].username);
+        $('#emailId').html(data[0].email);
     });
 
     /////////////////////////////Keypress Events/////////////////////////////////
@@ -195,9 +192,9 @@ $(document).ready(function () {
             $('#accountMenu').hide();
         }
         else if(e.keyCode == 13 && $('#addTodoWindow').css('display') == 'block')
-            $('#addTask').trigger('click tap');
+            $('#addTask').trigger('click');
         else if(e.keyCode == 13 && editWindowOpened == true)
-            $('#saveEditedTodo').trigger('click tap');
+            $('#saveEditedTodo').trigger('click');
     });
 
 
@@ -244,8 +241,8 @@ $(document).ready(function () {
 
     $('#signout').on('click tap', function () {
         $('#accountMenu').hide();
-        console.log(document.cookie);
-        document.cookie = 'todolistClient=; expires= Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+        console.log(localStorage.getItem('todolistClient'));
+        localStorage.setItem('todolistClient', '');
         window.location.href = '/login';
     });
 
@@ -301,7 +298,7 @@ $(document).ready(function () {
     $('#addReminder').on('click tap', function () {
         $('#schedule').show();
         $('#newTodo').css('border-radius', '5px 0 0 5px');
-        $('#schedule').trigger('click tap');
+        $('#schedule').trigger('click');
     });
 
     $('#schedule').on('click tap', function () {
@@ -355,7 +352,7 @@ $(document).ready(function () {
         currentTodoList = $(this).parent().attr('id');
         $('#addReminder').show();
         if(requestPath != 'inbox' && requestPath != 'important'){
-            $('#addReminder').trigger('click tap');                     //// to display reminder input box
+            $('#addReminder').trigger('click');                     //// to display reminder input box
             $('#addReminder').hide();                   //hides add reminder button
 
             var dateTimestamp = parseInt( $('#'+currentTodoList +' h1').children().attr('data-timestamp') );

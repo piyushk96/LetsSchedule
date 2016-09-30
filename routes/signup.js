@@ -12,7 +12,7 @@ router.post('/', function (req, res) {
         clientId: clientId.slice(0,10),
         username : req.body.username,
         email : req.body.email,
-        password : md5(req.body.password)
+        password : (req.body.password != null) ? md5(req.body.password):null
     };
 
     db.fetchUser(data.clientId, function(rows) {

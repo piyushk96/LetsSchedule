@@ -8,9 +8,8 @@
     <script src="../pace/pace.js"></script>
     <link rel="stylesheet" href="../pace/pace.css">
     <script>
-        var cookieVal = document.cookie;
-        if(cookieVal == '')
-        {
+        var clientId = localStorage.getItem('todolistClient');
+        if(clientId == ''){
             window.location.href = '/login';
         }
     </script>

@@ -7,7 +7,7 @@ const db = require('../todoDBhandler');
 const db2 = require('../userDBhandler');
 
 router.get('/emailandusername', function (req, res) {
-    db2.getUserEmail(req.query.clientId, function (obj) {
+    db2.fetchUser(req.query.clientId, function (obj) {
         res.send(obj);
     });
 });

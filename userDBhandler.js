@@ -8,37 +8,33 @@ let connection = {};
 function createConnection(){
     connection = mysql.createConnection({
         host: 'sql6.freemysqlhosting.net',
-        user: 'sql6135220',
-        database: 'sql6135220',
-        password: 'CGsgMxRq1I'
+        user: 'sql6138205',
+        database: 'sql6138205',
+        password: 'dTluEG1wIr'
+        // host: 'localhost',
+        // user: 'todouser',
+        // database: 'tododb'
     });
 }
 
 module.exports = {
-    getUserEmail : function (clientId, cb) {
-        createConnection();
-        connection.connect();
-        const queryString = 'SELECT username,email FROM todoClient WHERE clientId="' + clientId + '";';
-        connection.query(queryString, function (err, rows, fields) {
-            if (err)
-                console.log(err);
-            cb({
-                email : rows[0].email,
-                username: rows[0].username
-            });
-        });
-        connection.end();
-    },
-
     addUser : function (data, cb) {
         createConnection();
         connection.connect();
-        const query = 'INSERT INTO todoClient VALUES(' +
-            '"' + data.clientId + '",' +
-            '"' + data.username + '",' +
-            '"' + data.email + '",' +
-            '"' + data.password + '"' +
-            ');';
+        let query;
+        if(data.password == null)
+            query = 'INSERT INTO todoClient(clientId,username,email) VALUES(' +
+                '"' + data.clientId + '",' +
+                '"' + data.username + '",' +
+                '"' + data.email + '"' +
+                ');';
+        else
+            query = 'INSERT INTO todoClient VALUES(' +
+                '"' + data.clientId + '",' +
+                '"' + data.username + '",' +
+                '"' + data.email + '",' +
+                '"' + data.password + '"' +
+                ');';
         connection.query(query, function (err, result) {
             if (err) console.log(err);
             cb(result);
@@ -61,10 +57,16 @@ module.exports = {
     logInUser : function (data, cb) {
         createConnection();
         connection.connect();
-        const queryString = 'SELECT * FROM todoClient WHERE ' +
-            'email="' + data.email + '" AND ' +
-            'password="' + data.password +
-            '";';
+        let queryString;
+        if(data.password == null)
+            queryString = 'SELECT * FROM todoClient WHERE ' +
+                'email="' + data.email + '" AND ' +
+                'password IS null;';
+        else
+            queryString = 'SELECT * FROM todoClient WHERE ' +
+                'email="' + data.email + '" AND ' +
+                'password="' + data.password +
+                '";';
         connection.query(queryString, function (err, rows, fields) {
             if (err)
                 console.log(err);
@@ -72,5 +74,4 @@ module.exports = {
         });
         connection.end();
     }
-
 };

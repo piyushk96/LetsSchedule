@@ -5,6 +5,7 @@
     <title>Sign Up:TodoList</title>
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="pace/pace.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
     <link rel="stylesheet" href="pace/pace.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
@@ -28,10 +29,13 @@
 </head>
 <body>
 <div id="logo"></div>
-<h1>Get Todo List For Free</h1>
+<h1>Let's Set Up Your Account</h1>
 <div class="errors">
-    <div role="alert" class="message">
+    <div role="alert" class="message" id="incorrectEmail">
         An account with this email address already exists.
+    </div>
+    <div role="alert" class="message" id="enterPassword">
+        Please enter a password.
     </div>
 </div>
 <div id="formWrapper">
@@ -62,7 +66,7 @@
         <h2>OR</h2>
     </div>
 
-    <button type="button" id="googleSignup" class="google">
+    <button type="button" id="googleSignup" class="google customGPlusSignIn">
         <i class="fa fa-google-plus-square" aria-hidden="true"></i>
         <div>Sign Up With Google Account</div>
     </button>
@@ -74,26 +78,60 @@
 </div>
 
 <script>
-    $('form').submit(function () {
-        var clientData = {
-            username: $('#username').val(),
-            email: $('#email').val(),
-            password: $('#password').val()
-        };
+    var googleUser = {};
+    function signup(clientData){
+        console.log(googleUser);
         $.post('/signup', clientData, function (data, status) {
             if(data.status == 'exist') {
-                $('.errors').css('display', 'table');
+                $('#enterPassword').hide();
+                $('#incorrectEmail').show();
                 $('input').val('');
             }
             else{
-                var d = new Date();
-                d.setTime(d.getTime() + (365*24*60*60*1000));
-                var expires = "expires="+ d.toUTCString();
-                document.cookie = "todolistClient=" + data.clientId + "; " + expires;
+                localStorage.setItem('todolistClient', data.clientId);
                 window.location.href = '/todos';
+                console.log("signed In");
             }
-
         });
+    }
+
+    $(function () {
+        gapi.load('auth2', function(){
+            // Retrieve the singleton for the GoogleAuth library and set up the client.
+            var auth2 = gapi.auth2.init({
+                client_id: '95650438097-qfor02273p9n9cn9h1sbc4cei98tvcmc.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin'
+            });
+
+            //attach sign in
+            auth2.attachClickHandler('googleSignup', {},
+                function(googleUser) {
+                    var profile = googleUser.getBasicProfile();
+                    var clientData = {
+                        username: profile.getName(),
+                        email: profile.getEmail()
+                    };
+                    signup(clientData);
+                }, function(error) {
+                    alert(JSON.stringify(error, undefined, 2));
+                }
+            );
+        });
+    });
+
+    $('form').submit(function () {
+        if($('#password').val() == ''){
+            $('#enterPassword').show();
+            $('#incorrectEmail').hide();
+        }
+        else {
+            var clientData = {
+                username: $('#username').val(),
+                email: $('#email').val(),
+                password: $('#password').val()
+            };
+            signup(clientData);
+        }
         return false;
     });
 </script>
