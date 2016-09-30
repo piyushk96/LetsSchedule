@@ -1,7 +1,7 @@
 /**
  * Created by piyush on 24/8/16.
  */
-'use strict';git 
+'use strict';
 const mysql = require('mysql');
 
 let connection = {};
