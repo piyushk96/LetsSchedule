@@ -7,10 +7,10 @@ const mysql = require('mysql');
 let connection = {};
 function createConnection(){
     connection = mysql.createConnection({
-        host: 'sql6.freemysqlhosting.net',
-        user: 'sql6138205',
-        database: 'sql6138205',
-        password: 'dTluEG1wIr'
+        host: 'sql11.freemysqlhosting.net',
+        user: 'sql11155241',
+        database: 'sql11155241',
+        password: 'UuGBn2zY5R'
         // host: 'localhost',
         // user: 'todouser',
         // database: 'tododb'
