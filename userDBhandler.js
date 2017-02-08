@@ -7,13 +7,13 @@ const mysql = require('mysql');
 let connection = {};
 function createConnection(){
     connection = mysql.createConnection({
-        host: 'sql11.freemysqlhosting.net',
-        user: 'sql11155241',
-        database: 'sql11155241',
-        password: 'UuGBn2zY5R'
-        // host: 'localhost',
-        // user: 'todouser',
-        // database: 'tododb'
+        // host: 'sql11.freemysqlhosting.net',
+        // user: 'sql11155241',
+        // database: 'sql11155241',
+        // password: 'UuGBn2zY5R'
+        host: 'localhost',
+        user: 'todouser',
+        database: 'tododb'
     });
 }
 
@@ -70,7 +70,7 @@ module.exports = {
         connection.query(queryString, function (err, rows, fields) {
             if (err)
                 console.log(err);
-            cb(rows);
+            cb(rows.length, rows[0].clientId);
         });
         connection.end();
     }

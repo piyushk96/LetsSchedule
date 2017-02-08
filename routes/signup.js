@@ -3,7 +3,8 @@
  */
 'use strict';
 const router = require('express').Router();
-const db = require('../userDBhandler');
+// const db = require('../userDBhandler');
+const db = require('../psUserDbHandler');
 const md5 = require('md5');
 
 router.post('/', function (req, res) {

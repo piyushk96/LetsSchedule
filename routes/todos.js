@@ -3,8 +3,11 @@
  */
 'use strict';
 const router = require('express').Router();
-const db = require('../todoDBhandler');
-const db2 = require('../userDBhandler');
+// const db = require('../todoDBhandler');
+const db = require('../psTodoDbHandler');
+// const db2 = require('../userDBhandler');
+const db2 = require('../psUserDbHandler');
+
 
 router.get('/emailandusername', function (req, res) {
     db2.fetchUser(req.query.clientId, function (obj) {
@@ -23,7 +26,7 @@ router.post('/addtodo', function(req, res){
         id: req.body.id,
         task: req.body.task,
         date: req.body.date,
-        important: req.body.important,
+        important: (req.body.important == 'true')? true : false,
         clientId: req.body.clientId
     };
     db.addTodo(newTodo, function (result) {
@@ -71,7 +74,7 @@ router.get('/updatetododate', function (req, res) {
 });
 
 router.get('/modifydonestatus', function (req, res) {
-    const done = (req.query.done == 'true')? false : true;
+    const done = (req.query.done == 'true')? false : true;      //reverse status
     const obj = {
         id: req.query.id,
         done: done,
@@ -83,7 +86,7 @@ router.get('/modifydonestatus', function (req, res) {
 });
 
 router.get('/modifyimportantstatus', function (req, res) {
-    const imp = (req.query.imp == 'true')? false : true;
+    const imp = (req.query.imp == 'true')? false : true;        //reverse status
     const obj = {
         id: req.query.id,
         imp: imp,

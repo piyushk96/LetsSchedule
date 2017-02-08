@@ -3,7 +3,8 @@
  */
 'use strict';
 const router = require('express').Router();
-const db = require('../userDBhandler');
+// const db = require('../userDBhandler');
+const db = require('../psUserDbHandler');
 const md5 = require('md5');
 
 router.post('/checkclientid', function (req, res) {
@@ -40,13 +41,13 @@ router.post('/', function (req, res) {
         password : (req.body.password == null)? null : md5(req.body.password)
     };
 
-    db.logInUser(data, function(rows) {
-        if(rows.length == 0)
+    db.logInUser(data, function(numOfRows, clientId) {
+        if(numOfRows == 0)
             res.send({status: 'invalid'});
         else {
             res.send({
                 status: 'valid',
-                clientId: rows[0].clientId
+                clientId: clientId
             });
         }
     });
